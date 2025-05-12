@@ -17,6 +17,7 @@ const stylingIds = {
     products: "livesearch products-container",
     productName: "livesearch product-name",
     productPrice: "livesearch product-price",
+    productBrand: "livesearch brand",
     suggestion: "livesearch suggestion",
     suggestions: "livesearch suggestions-container",
     suggestionsHeader: "livesearch suggestions-header",

@@ -162,6 +162,9 @@ export interface Product {
         add_to_cart_allowed: null | boolean;
     };
     highlights: Array<Highlights>;
+    productView: {
+        attributes: Array<Attributes>
+    }
 }
 
 export interface ComplexTextValue {
@@ -188,6 +191,12 @@ export interface Media {
 
 export interface CustomAttribute {
     code: string;
+    value: string;
+}
+
+export interface Attributes {
+    label: string;
+    name: string;
     value: string;
 }
 

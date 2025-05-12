@@ -7,7 +7,7 @@ accordance with the terms of the Adobe license agreement accompanying
 it.
 */
 
-import { Product } from "./fragments";
+import { Product, ProductView } from "./fragments";
 
 const QUICK_SEARCH_QUERY = `
     query quickSearch(
@@ -28,6 +28,7 @@ const QUICK_SEARCH_QUERY = `
         ){
             items {
                 ...Product
+                ...ProductView
             }
             page_info {
                 current_page
@@ -37,6 +38,7 @@ const QUICK_SEARCH_QUERY = `
         }
     }
     ${Product}
+    ${ProductView}
 `;
 
 export { QUICK_SEARCH_QUERY };

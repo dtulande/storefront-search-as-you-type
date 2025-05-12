@@ -22,7 +22,7 @@ const config = {
         // Add aliases here ---> "^alias(.*)$": "<rootDir>/src/alias-path$1", <---
     },
     globals: {
-        API_URL: "https://commerce.adobe.io/search/graphql",
+        API_URL: "https://catalog-service-sandbox.adobe.io/graphql",
     },
 };
 

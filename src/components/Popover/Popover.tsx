@@ -15,6 +15,7 @@ import {
     isMobile,
     searchUnitId,
     stylingIds,
+    getProductBrand
 } from "utils";
 
 import { Grid, ProductImage, StyledLink, StyledText } from "../../styles";
@@ -298,6 +299,9 @@ const ProductItem: FC<{
                 </Grid>
                 <Grid gridArea="price" className={stylingIds.productPrice}>
                     {getProductPrice(product, currencySymbol, currencyRate)}
+                </Grid>
+                <Grid gridArea="brand" className={stylingIds.productBrand}>
+                    {getProductBrand(product)}
                 </Grid>
             </Grid>
         </StyledLink>

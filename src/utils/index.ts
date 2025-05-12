@@ -13,6 +13,7 @@ export * from "./constants";
 export * from "./context";
 export * from "./getProductImageURL";
 export * from "./getProductPrice";
+export * from "./getProductBrand";
 export * from "./htmlStringDecode";
 export * from "./mobileHelperFunctions";
 
