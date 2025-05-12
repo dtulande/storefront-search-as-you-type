@@ -43,9 +43,9 @@ interface PopoverProps {
 }
 
 const text = {
-    suggestions: "Suggestions",
+    suggestions: "Sugerencias",
     aria: "Search term suggestions",
-    all: "View all",
+    all: "Ver todo",
 };
 
 const Popover: FC<PopoverProps> = ({
@@ -54,7 +54,7 @@ const Popover: FC<PopoverProps> = ({
     formRef,
     inputRef,
     resultsRef,
-    pageSize = 6,
+    pageSize = 4,
     currencySymbol = "",
     currencyRate = "1",
     minQueryLengthHit,
@@ -64,10 +64,8 @@ const Popover: FC<PopoverProps> = ({
     const suggestions = response?.data?.productSearch.suggestions ?? [];
 
     const containerStyling = `
-            display: flex;
-            right: 0px;
-            margin-top: 5px;
-            box-shadow: 0px 0px 6px 0px #cacaca;
+            --search-popover-right-space: 100px;
+            border: 1px solid #d4d4d4;
         `;
 
     // containerStyling is only for desktop display
@@ -123,7 +121,7 @@ const Popover: FC<PopoverProps> = ({
         if (isMobile) {
             return "100%";
         } else {
-            return suggestions.length > 0 ? "700px" : "530px";
+            return suggestions.length > 0 ? "min(100vw - var(--search-popover-right-space), 1188px)" : "784px";
         }
     };
 
