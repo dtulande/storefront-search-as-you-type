@@ -18,7 +18,7 @@ import {
     getProductBrand
 } from "utils";
 
-import { Grid, ProductImage, StyledLink, StyledText } from "../../styles";
+import { Grid, ProductImage, StyledLink, StyledText, Flex } from "../../styles";
 import NoImageSvg from "../assets/NoImage.svg";
 import {
     Product,
@@ -103,13 +103,12 @@ const Popover: FC<PopoverProps> = ({
             return (
                 <StyledText
                     className={stylingIds.suggestion}
-                    customFontSize="90%"
-                    customLineHeight="95%"
+                    customFontSize="1.4rem"
+                    customLineHeight="2rem"
                     key={suggestion}
                     onClick={() => onSuggestionClick(suggestion)}
-                    hoverColor="#f5f5f5"
                     hoverPointer="pointer"
-                    padding="4px"
+                    padding="0"
                 >
                     {htmlStringDecode(suggestion)}
                 </StyledText>
@@ -139,43 +138,35 @@ const Popover: FC<PopoverProps> = ({
     }
 
     return (
-        <Grid
+        <Flex
             className={stylingIds.popover}
             width={calculateWidth()}
             height={calculatePopoverHeight()}
             backgroundColor="#fff"
-            gridTemplateAreas={
-                isMobile
-                    ? '"suggestions""previews""viewall"'
-                    : '"suggestions previews" "viewall viewall"'
-            }
-            rowGap="16px"
-            columnGap={suggestions.length > 0 ? "16px" : "0px"}
-            gridTemplateColumns={isMobile ? "1fr" : "auto 3fr"}
-            gridTemplateRows={isMobile ? "auto 1fr 36px" : "1fr 36px"}
-            overflowY={isMobile ? "scroll" : "auto"}
-            overflowX="hidden"
+            flexDirection={isMobile ? "column" : "row"}
+            boxSizing="border-box"
         >
             {/* the suggestions element is currently not used */}
             {suggestions.length > 0 && (
                 <Grid
                     className={stylingIds.suggestions}
-                    gridArea="suggestions"
-                    width={isMobile ? "auto" : "max-content"}
-                    maxWidth={isMobile ? "none" : "150px"}
+                    width={isMobile ? "auto" : "min(28vw, 404px)"}
                     gridTemplateRows={
                         isMobile
                             ? `repeat(${suggestions.length + 1}, 3.5rem)` // +1 to account for "suggestions" row
-                            : `repeat(${pageSize}, 1fr) minmax(0px, 20px);`
+                            : `repeat(${pageSize}, 1fr) minmax(0px, 38px);`
                     }
+                    rowGap={"16px"}
                     padding={
-                        isMobile ? "16px 32px 0px 32px" : "16px 0px 8px 16px"
+                        isMobile ? "16px 32px 0px 32px" : "48px"
                     }
                     margin={isMobile ? "auto 0px" : "unset"}
                     textAlign={isMobile ? "center" : "unset"}
+                    boxSizing="border-box"
+                    backgroundColor="#f6f6f6"
                 >
                     <StyledText
-                        customFontWeight={600}
+                        customFontWeight={400}
                         className={stylingIds.suggestionsHeader}
                     >
                         {text.suggestions}
@@ -184,51 +175,68 @@ const Popover: FC<PopoverProps> = ({
                 </Grid>
             )}
 
-            <Grid
-                className={stylingIds.products}
-                gridArea="previews"
-                gridTemplateColumns={"1fr 1fr"}
-                gridTemplateRows={
-                    isMobile
-                        ? `repeat(${Math.ceil(products.length / 2)}, 1fr)`
-                        : "repeat(3, 1fr)"
-                }
-                gap="4px"
-                padding={isMobile ? "0px 16px" : "16px"}
-                paddingBottom="0px"
-                alignSelf="start"
+            <Flex 
+                className={stylingIds.viewAllWrapper}
+                gridArea={"heading-previews"}
+                flexDirection="column"
+                maxWidth={isMobile ? "100%" : "784px"}
             >
-                {products.map((product, index) => {
-                    //render
-                    if (index < pageSize) {
-                        return (
-                            <ProductItem
-                                key={product.product.sku}
-                                product={product}
-                                updateAndSubmit={updateAndSubmit}
-                                currencySymbol={currencySymbol}
-                                currencyRate={currencyRate}
-                                route={route}
-                            />
-                        );
-                    }
-                })}
-            </Grid>
+                <Flex className="close-button"></Flex>
+                <Flex
+                    className={stylingIds.viewAllWrapper}
+                    justifyContent="space-between"
+                >
+                    <Flex
+                        className="search-text"
+                    >
+                        Los mejores resultados para “Estee Lau”
+                    </Flex>
+                    <Grid
+                        className={stylingIds.viewAll}
+                        gridArea="viewall"
+                        alignContent="center"
+                        textAlign="center"
+                        onClick={() => updateAndSubmit()}
+                        hoverFontWeight={600}
+                        hoverPointer="pointer"
+                    >
+                        {text.all}
+                    </Grid>
+                </Flex>
 
-            <Grid
-                className={stylingIds.viewAll}
-                gridArea="viewall"
-                alignContent="center"
-                backgroundColor="#f4f4f4"
-                textAlign="center"
-                onClick={() => updateAndSubmit()}
-                hoverColor="#f0f0f0"
-                hoverFontWeight={600}
-                hoverPointer="pointer"
-            >
-                {text.all}
-            </Grid>
-        </Grid>
+                <Grid
+                    className={stylingIds.products}
+                    gridTemplateColumns={"1fr 1fr"}
+                    gridTemplateRows={
+                        isMobile
+                            ? `repeat(${Math.ceil(products.length / 2)}, 1fr)`
+                            : "repeat(3, 1fr)"
+                    }
+                    gap="4px"
+                    padding={isMobile ? "0px 16px" : "16px"}
+                    paddingBottom="0px"
+                    alignSelf="start"
+                    overflowY={isMobile ? "scroll" : "auto"}
+                    overflowX="hidden"
+                >
+                    {products.map((product, index) => {
+                        //render
+                        if (index < pageSize) {
+                            return (
+                                <ProductItem
+                                    key={product.product.sku}
+                                    product={product}
+                                    updateAndSubmit={updateAndSubmit}
+                                    currencySymbol={currencySymbol}
+                                    currencyRate={currencyRate}
+                                    route={route}
+                                />
+                            );
+                        }
+                    })}
+                </Grid>
+            </Flex>
+        </Flex>
     );
 };
 

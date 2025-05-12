@@ -12,6 +12,7 @@ const searchUnitId = "livesearch-popover";
 // Customers will be using these for their custom styling
 // do *not* change arbitrarily as it may break their storefronts
 const stylingIds = {
+    popoverWrapper: "livesearch popover-wrapper",
     popover: "livesearch popover-container",
     product: "livesearch product-result",
     products: "livesearch products-container",
@@ -21,7 +22,8 @@ const stylingIds = {
     suggestion: "livesearch suggestion",
     suggestions: "livesearch suggestions-container",
     suggestionsHeader: "livesearch suggestions-header",
-    viewAll: "livesearch view-all-footer",
+    viewAll: "livesearch view-all",
+    viewAllWrapper: "livesearch view-all-wrapper",
 };
 // ---
 
