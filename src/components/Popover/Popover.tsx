@@ -180,6 +180,7 @@ const Popover: FC<PopoverProps> = ({
                 gridArea={"heading-previews"}
                 flexDirection="column"
                 maxWidth={isMobile ? "100%" : "784px"}
+                padding={isMobile ? "10px" : "48px 48px 44px"}
             >
                 <Flex className="close-button"></Flex>
                 <Flex
@@ -206,15 +207,13 @@ const Popover: FC<PopoverProps> = ({
 
                 <Grid
                     className={stylingIds.products}
-                    gridTemplateColumns={"1fr 1fr"}
-                    gridTemplateRows={
+                    gridTemplateColumns={
                         isMobile
                             ? `repeat(${Math.ceil(products.length / 2)}, 1fr)`
-                            : "repeat(3, 1fr)"
+                            : "repeat(4, 1fr)"
                     }
-                    gap="4px"
-                    padding={isMobile ? "0px 16px" : "16px"}
-                    paddingBottom="0px"
+                    gap="8px"
+                    flexGrow={"1"}
                     alignSelf="start"
                     overflowY={isMobile ? "scroll" : "auto"}
                     overflowX="hidden"
