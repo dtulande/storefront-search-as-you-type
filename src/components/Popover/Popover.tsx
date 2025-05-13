@@ -217,6 +217,7 @@ const Popover: FC<PopoverProps> = ({
                     alignSelf="start"
                     overflowY={isMobile ? "scroll" : "auto"}
                     overflowX="hidden"
+                    marginTop={"16px"}
                 >
                     {products.map((product, index) => {
                         //render
@@ -265,50 +266,35 @@ const ProductItem: FC<{
 
     return (
         <StyledLink href={productUrl || ""} rel="noopener noreferrer">
-            <Grid
+            <Flex
                 className={stylingIds.product}
-                gridTemplateAreas={
-                    isMobile
-                        ? '"image" "productName" "price"'
-                        : '"image productName" "image price"'
-                }
-                gridTemplateColumns={isMobile ? "1fr" : "1fr 4fr"}
-                gridTemplateRows={
-                    isMobile ? "1fr 3.5rem 3.5rem" : "repeat(2, 1fr)"
-                }
-                columnGap="16px"
-                alignSelf="center"
-                height={isMobile ? "auto" : "80px"}
-                minWidth={isMobile ? "auto" : "192px"}
-                hoverColor="#f5f5f5"
+                maxWidth={"166px"}
                 hoverPointer="pointer"
-                padding={isMobile ? "16px" : "unset"}
-                boxSizing={isMobile ? "border-box" : "inherit"}
                 onClick={onProductClick}
+                flexDirection="column"
             >
-                <ProductImage
-                    gridArea="image"
-                    customWidth="100%"
-                    src={productImage || NoImageSvg}
-                />
+                <div className="product-image-wrapper">
+                    <ProductImage width={112} height={112}
+                        customWidth="100%"
+                        src={productImage || NoImageSvg}
+                    />
+                </div>
+                <Grid 
+                    className={stylingIds.productBrand}
+                    margin={"8px 0 2px"}
+                    >
+                    {getProductBrand(product)}
+                </Grid>
                 <Grid
-                    gridArea="productName"
-                    alignSelf={isMobile ? "center" : "end"}
+                    className="product-name-wrapper"
                 >
                     <StyledText
-                        customFontWeight={600}
                         className={stylingIds.productName}
                     >
                         {htmlStringDecode(product.product.name)}
                     </StyledText>
                 </Grid>
-                <Grid gridArea="price" className={stylingIds.productPrice}>
-                    {getProductPrice(product, currencySymbol, currencyRate)}
-                </Grid>
-                <Grid gridArea="brand" className={stylingIds.productBrand}>
-                    {getProductBrand(product)}
-                </Grid>
-            </Grid>
+            </Flex>
         </StyledLink>
     );
 };
