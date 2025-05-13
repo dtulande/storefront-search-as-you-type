@@ -46,6 +46,7 @@ const text = {
     suggestions: "Sugerencias",
     aria: "Search term suggestions",
     all: "Ver todo",
+    searched: 'Los mejores resultados para “{text}”',
 };
 
 const Popover: FC<PopoverProps> = ({
@@ -181,6 +182,7 @@ const Popover: FC<PopoverProps> = ({
                 flexDirection="column"
                 maxWidth={isMobile ? "100%" : "784px"}
                 padding={isMobile ? "10px" : "48px 48px 44px"}
+                flexGrow={1}
             >
                 <Flex className="close-button"></Flex>
                 <Flex
@@ -190,7 +192,11 @@ const Popover: FC<PopoverProps> = ({
                     <Flex
                         className="search-text"
                     >
-                        Los mejores resultados para “Estee Lau”
+                        {text.searched.replace(
+                                '{text}',
+                                `${inputRef.current?.value}`
+                            )
+                        }
                     </Flex>
                     <Grid
                         className={stylingIds.viewAll}
