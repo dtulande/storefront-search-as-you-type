@@ -169,14 +169,9 @@ const Popover: FC<PopoverProps> = ({
         >
             {/* the suggestions element is currently not used */}
             {suggestions.length > 0 && (
-                <Grid
+                <Flex
                     className={stylingIds.suggestions}
                     width={isMobile ? "auto" : "min(28vw, 404px)"}
-                    gridTemplateRows={
-                        isMobile
-                            ? `repeat(${suggestions.length + 1}, 3.8rem)` // +1 to account for "suggestions" row
-                            : `repeat(${pageSize}, 1fr) minmax(0px, 38px);`
-                    }
                     rowGap={"16px"}
                     padding={
                         isMobile ? "24px 16px" : "48px"
@@ -191,7 +186,7 @@ const Popover: FC<PopoverProps> = ({
                         {text.suggestions}
                     </StyledText>
                     {Suggestions}
-                </Grid>
+                </Flex>
             )}
 
             <Flex 
