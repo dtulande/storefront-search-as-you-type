@@ -19,11 +19,16 @@ const stylingIds = {
     productName: "livesearch product-name",
     productPrice: "livesearch product-price",
     productBrand: "livesearch brand",
+    productImageWrapper: "livesearch product-image-wrapper",
+    productNameWrapper: "livesearch product-name-wrapper",
     suggestion: "livesearch suggestion",
     suggestions: "livesearch suggestions-container",
     suggestionsHeader: "livesearch suggestions-header",
     viewAll: "livesearch view-all",
     viewAllWrapper: "livesearch view-all-wrapper",
+    closeButton: "livesearch close-button",
+    closeIconContainer: "livesearch close-icon-container",
+    searchedTextLabel: "livesearch searched-text",
 };
 // ---
 

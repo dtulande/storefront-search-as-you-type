@@ -176,14 +176,13 @@ const Popover: FC<PopoverProps> = ({
 
             <Flex 
                 className={stylingIds.viewAllWrapper}
-                gridArea={"heading-previews"}
                 flexDirection="column"
                 maxWidth={isMobile ? "100%" : "784px"}
                 padding={isMobile ? "10px" : "48px 48px 44px"}
                 flexGrow={1}
             >
                 <Flex 
-                className="close-button"
+                className={stylingIds.closeButton}
                 alignSelf="flex-end"
                 width={isMobile ? "0" : "100%"}
                 height={isMobile ? "0" : "auto"}
@@ -191,7 +190,7 @@ const Popover: FC<PopoverProps> = ({
                 visibility={isMobile ? "hidden" : "visible"}
                 >
                     <Flex
-                        className="icon-container"
+                        className={stylingIds.closeIconContainer}
                         width={"16px"}
                         height={"16px"}
                         position={"absolute"}
@@ -209,7 +208,7 @@ const Popover: FC<PopoverProps> = ({
                     justifyContent="space-between"
                 >
                     <Flex
-                        className="search-text"
+                        className={stylingIds.searchedTextLabel}
                     >
                         {text.searched.replace(
                                 '{text}',
@@ -219,11 +218,9 @@ const Popover: FC<PopoverProps> = ({
                     </Flex>
                     <Grid
                         className={stylingIds.viewAll}
-                        gridArea="viewall"
                         alignContent="center"
                         textAlign="center"
                         onClick={() => updateAndSubmit()}
-                        hoverFontWeight={600}
                         hoverPointer="pointer"
                     >
                         {text.all}
@@ -298,7 +295,7 @@ const ProductItem: FC<{
                 onClick={onProductClick}
                 flexDirection="column"
             >
-                <div className="product-image-wrapper">
+                <div className={stylingIds.productImageWrapper}>
                     <ProductImage width={112} height={112}
                         customWidth="100%"
                         src={productImage || NoImageSvg}
@@ -311,7 +308,7 @@ const ProductItem: FC<{
                     {getProductBrand(product)}
                 </Grid>
                 <Grid
-                    className="product-name-wrapper"
+                    className={stylingIds.productNameWrapper}
                 >
                     <StyledText
                         className={stylingIds.productName}
