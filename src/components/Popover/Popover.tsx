@@ -125,7 +125,12 @@ const Popover: FC<PopoverProps> = ({
                         hoverPointer="pointer"
                         padding="0"
                     >
-                        {htmlStringDecode(suggestion)}
+                        <strong className={stylingIds.suggestionLinkStrong}>
+                                {inputRef.current?.value}
+                        </strong>
+                        <span className={stylingIds.suggestionLinkInfo}>
+                            {htmlStringDecode(suggestion.replace(new RegExp(`${inputRef.current?.value}`, ''), ''))}
+                        </span>
                     </StyledText>
                 </Flex>
             );
