@@ -64,13 +64,15 @@ const Popover: FC<PopoverProps> = ({
     const products = response?.data?.productSearch.items ?? [];
     const suggestions = response?.data?.productSearch.suggestions ?? [];
 
-    const containerStyling = `
-            --search-popover-right-space: 100px;
-            border: 1px solid #d4d4d4;
-        `;
-
     // containerStyling is only for desktop display
     if (resultsRef.current && (active || !isMobile)) {
+        const rect = resultsRef.current.getBoundingClientRect();
+        const rightSpace = window.innerWidth - rect.right;
+
+        const containerStyling = `
+            --search-popover-right-space: ${rightSpace}px;
+        `;
+
         resultsRef.current.style.cssText = containerStyling;
     }
 
@@ -204,8 +206,8 @@ const Popover: FC<PopoverProps> = ({
                 >
                     <Flex
                         className={stylingIds.closeIconContainer}
-                        width={"16px"}
-                        height={"16px"}
+                        width={"23px"}
+                        height={"23px"}
                         position={"absolute"}
                         top={"-30px"}
                         right={"-30px"}
