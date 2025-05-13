@@ -159,15 +159,13 @@ const Popover: FC<PopoverProps> = ({
                     }
                     rowGap={"16px"}
                     padding={
-                        isMobile ? "16px 32px 0px 32px" : "48px"
+                        isMobile ? "24px 16px" : "48px"
                     }
                     margin={isMobile ? "auto 0px" : "unset"}
-                    textAlign={isMobile ? "center" : "unset"}
                     boxSizing="border-box"
                     backgroundColor="#f6f6f6"
                 >
                     <StyledText
-                        customFontWeight={400}
                         className={stylingIds.suggestionsHeader}
                     >
                         {text.suggestions}
@@ -184,7 +182,28 @@ const Popover: FC<PopoverProps> = ({
                 padding={isMobile ? "10px" : "48px 48px 44px"}
                 flexGrow={1}
             >
-                <Flex className="close-button"></Flex>
+                <Flex 
+                className="close-button"
+                alignSelf="flex-end"
+                width={isMobile ? "0" : "100%"}
+                height={isMobile ? "0" : "auto"}
+                position="relative"
+                visibility={isMobile ? "hidden" : "visible"}
+                >
+                    <Flex
+                        className="icon-container"
+                        width={"16px"}
+                        height={"16px"}
+                        position={"absolute"}
+                        top={"-30px"}
+                        right={"-30px"}
+                        cursor="pointer"
+                        >
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlSpace="preserve" version="1.1" viewBox="0 0 847 1058.75">
+                            <g><polygon className="fil0" points="54,88 390,423 54,759 88,792 423,457 759,792 792,759 457,423 792,88 759,54 423,390 88,54 "/></g>
+                        </svg>
+                    </Flex>
+                </Flex>
                 <Flex
                     className={stylingIds.viewAllWrapper}
                     justifyContent="space-between"
