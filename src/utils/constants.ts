@@ -25,6 +25,8 @@ const stylingIds = {
     suggestions: "livesearch suggestions-container",
     suggestionsHeader: "livesearch suggestions-header",
     suggestionLinkContainer: "livesearch suggestions-link-container",
+    suggestionLinkStrong: "livesearch suggestions-link-strong",
+    suggestionLinkInfo: "livesearch suggestions-link-info",
     viewAll: "livesearch view-all",
     viewAllWrapper: "livesearch view-all-wrapper",
     closeButton: "livesearch close-button",
