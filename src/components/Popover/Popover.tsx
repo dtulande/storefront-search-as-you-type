@@ -154,16 +154,16 @@ const Popover: FC<PopoverProps> = ({
                     width={isMobile ? "auto" : "min(28vw, 404px)"}
                     gridTemplateRows={
                         isMobile
-                            ? `repeat(${suggestions.length + 1}, 3.5rem)` // +1 to account for "suggestions" row
+                            ? `repeat(${suggestions.length + 1}, 3.8rem)` // +1 to account for "suggestions" row
                             : `repeat(${pageSize}, 1fr) minmax(0px, 38px);`
                     }
                     rowGap={"16px"}
                     padding={
                         isMobile ? "24px 16px" : "48px"
                     }
-                    margin={isMobile ? "auto 0px" : "unset"}
                     boxSizing="border-box"
                     backgroundColor="#f6f6f6"
+                    flexGrow={1}
                 >
                     <StyledText
                         className={stylingIds.suggestionsHeader}
