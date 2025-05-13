@@ -102,17 +102,30 @@ const Popover: FC<PopoverProps> = ({
     const Suggestions = suggestions.map((suggestion, index) => {
         if (index <= 4) {
             return (
-                <StyledText
-                    className={stylingIds.suggestion}
-                    customFontSize="1.4rem"
-                    customLineHeight="2rem"
+                <Flex
+                    className={stylingIds.suggestionLinkContainer}
+                    alignItems="center"
+                    columnGap={"8px"}
                     key={suggestion}
-                    onClick={() => onSuggestionClick(suggestion)}
-                    hoverPointer="pointer"
-                    padding="0"
                 >
-                    {htmlStringDecode(suggestion)}
-                </StyledText>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12.612" height="12.612" viewBox="0 0 12.612 12.612">
+                        <g id="Search--Streamline-Streamline--3.0" transform="translate(-0.024 -0.024)">
+                            <path id="Trazado_53689" data-name="Trazado 53689" d="M.767,6.957A4.72,4.72,0,1,0,3.265.766a4.72,4.72,0,0,0-2.5,6.191" transform="translate(0)" fill="none" stroke="#6e6e6e" strokeLinecap="round" strokeLinejoin="round" strokeWidth="0.7"/>
+                            <path id="Trazado_53690" data-name="Trazado 53690" d="M8.448,8.448l4,4" transform="translate(-0.06 -0.06)" fill="none" stroke="#6e6e6e" strokeLinejoin="round" strokeWidth="0.7"/>
+                        </g>
+                    </svg>
+                    <StyledText
+                        className={stylingIds.suggestion}
+                        customFontSize="1.4rem"
+                        customLineHeight="2rem"
+                        key={suggestion}
+                        onClick={() => onSuggestionClick(suggestion)}
+                        hoverPointer="pointer"
+                        padding="0"
+                    >
+                        {htmlStringDecode(suggestion)}
+                    </StyledText>
+                </Flex>
             );
         }
     });
