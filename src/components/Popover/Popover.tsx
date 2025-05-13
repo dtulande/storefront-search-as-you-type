@@ -109,6 +109,8 @@ const Popover: FC<PopoverProps> = ({
                     alignItems="center"
                     columnGap={"8px"}
                     key={suggestion}
+                    onClick={() => onSuggestionClick(suggestion)}
+                    hoverPointer="pointer"
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" width="12.612" height="12.612" viewBox="0 0 12.612 12.612">
                         <g id="Search--Streamline-Streamline--3.0" transform="translate(-0.024 -0.024)">
@@ -121,8 +123,6 @@ const Popover: FC<PopoverProps> = ({
                         customFontSize="1.4rem"
                         customLineHeight="2rem"
                         key={suggestion}
-                        onClick={() => onSuggestionClick(suggestion)}
-                        hoverPointer="pointer"
                         padding="0"
                     >
                         <strong className={stylingIds.suggestionLinkStrong}>
@@ -171,6 +171,7 @@ const Popover: FC<PopoverProps> = ({
             {suggestions.length > 0 && (
                 <Flex
                     className={stylingIds.suggestions}
+                    flexDirection="column"
                     width={isMobile ? "auto" : "min(28vw, 404px)"}
                     rowGap={"16px"}
                     padding={
@@ -254,7 +255,7 @@ const Popover: FC<PopoverProps> = ({
                     alignSelf="start"
                     overflowY={isMobile ? "scroll" : "auto"}
                     overflowX="hidden"
-                    marginTop={"16px"}
+                    margin={"16px auto 0"}
                 >
                     {products.map((product, index) => {
                         //render
