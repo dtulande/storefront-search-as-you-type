@@ -164,6 +164,7 @@ export interface Product {
     highlights: Array<Highlights>;
     productView: {
         attributes: Array<Attributes>
+        urlKey: string
     }
 }
 

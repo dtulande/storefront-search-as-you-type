@@ -299,7 +299,7 @@ const ProductItem: FC<{
 
     const productImage = getProductImageURL(product);
     const productUrl = route
-        ? route({ sku: product.product.sku })
+        ? route({ sku: product.product.sku, urlKey: product.productView.urlKey })
         : product.product.canonical_url;
 
     return (
