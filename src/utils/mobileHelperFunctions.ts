@@ -10,7 +10,7 @@ it.
 import { activeClass } from "utils";
 
 const isMobile = window.matchMedia(
-    "only screen and (max-width: 768px)",
+    "only screen and (max-width: 1024px)",
 ).matches;
 
 const handleMobileDisplay = (target: HTMLLabelElement): void => {

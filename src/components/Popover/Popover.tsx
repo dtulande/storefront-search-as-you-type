@@ -15,9 +15,10 @@ import {
     isMobile,
     searchUnitId,
     stylingIds,
+    getProductBrand
 } from "utils";
 
-import { Grid, ProductImage, StyledLink, StyledText } from "../../styles";
+import { Grid, ProductImage, StyledLink, StyledText, Flex } from "../../styles";
 import NoImageSvg from "../assets/NoImage.svg";
 import {
     Product,
@@ -42,9 +43,10 @@ interface PopoverProps {
 }
 
 const text = {
-    suggestions: "Suggestions",
+    suggestions: "Sugerencias",
     aria: "Search term suggestions",
-    all: "View all",
+    all: "Ver todo",
+    searched: 'Los mejores resultados para “{text}”',
 };
 
 const Popover: FC<PopoverProps> = ({
@@ -53,7 +55,7 @@ const Popover: FC<PopoverProps> = ({
     formRef,
     inputRef,
     resultsRef,
-    pageSize = 6,
+    pageSize = 4,
     currencySymbol = "",
     currencyRate = "1",
     minQueryLengthHit,
@@ -62,15 +64,15 @@ const Popover: FC<PopoverProps> = ({
     const products = response?.data?.productSearch.items ?? [];
     const suggestions = response?.data?.productSearch.suggestions ?? [];
 
-    const containerStyling = `
-            display: flex;
-            right: 0px;
-            margin-top: 5px;
-            box-shadow: 0px 0px 6px 0px #cacaca;
-        `;
-
     // containerStyling is only for desktop display
     if (resultsRef.current && (active || !isMobile)) {
+        const rect = resultsRef.current.getBoundingClientRect();
+        const rightSpace = window.innerWidth - rect.right;
+
+        const containerStyling = `
+            --search-popover-right-space: ${rightSpace}px;
+        `;
+
         resultsRef.current.style.cssText = containerStyling;
     }
 
@@ -102,18 +104,35 @@ const Popover: FC<PopoverProps> = ({
     const Suggestions = suggestions.map((suggestion, index) => {
         if (index <= 4) {
             return (
-                <StyledText
-                    className={stylingIds.suggestion}
-                    customFontSize="90%"
-                    customLineHeight="95%"
+                <Flex
+                    className={stylingIds.suggestionLinkContainer}
+                    alignItems="center"
+                    columnGap={"8px"}
                     key={suggestion}
                     onClick={() => onSuggestionClick(suggestion)}
-                    hoverColor="#f5f5f5"
                     hoverPointer="pointer"
-                    padding="4px"
                 >
-                    {htmlStringDecode(suggestion)}
-                </StyledText>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12.612" height="12.612" viewBox="0 0 12.612 12.612">
+                        <g id="Search--Streamline-Streamline--3.0" transform="translate(-0.024 -0.024)">
+                            <path id="Trazado_53689" data-name="Trazado 53689" d="M.767,6.957A4.72,4.72,0,1,0,3.265.766a4.72,4.72,0,0,0-2.5,6.191" transform="translate(0)" fill="none" stroke="#6e6e6e" strokeLinecap="round" strokeLinejoin="round" strokeWidth="0.7"/>
+                            <path id="Trazado_53690" data-name="Trazado 53690" d="M8.448,8.448l4,4" transform="translate(-0.06 -0.06)" fill="none" stroke="#6e6e6e" strokeLinejoin="round" strokeWidth="0.7"/>
+                        </g>
+                    </svg>
+                    <StyledText
+                        className={stylingIds.suggestion}
+                        customFontSize="1.4rem"
+                        customLineHeight="2rem"
+                        key={suggestion}
+                        padding="0"
+                    >
+                        <strong className={stylingIds.suggestionLinkStrong}>
+                                {inputRef.current?.value}
+                        </strong>
+                        <span className={stylingIds.suggestionLinkInfo}>
+                            {htmlStringDecode(suggestion.replace(new RegExp(`${inputRef.current?.value}`, ''), ''))}
+                        </span>
+                    </StyledText>
+                </Flex>
             );
         }
     });
@@ -122,7 +141,7 @@ const Popover: FC<PopoverProps> = ({
         if (isMobile) {
             return "100%";
         } else {
-            return suggestions.length > 0 ? "700px" : "530px";
+            return suggestions.length > 0 ? "min(100vw - var(--search-popover-right-space), 1188px)" : "784px";
         }
     };
 
@@ -140,96 +159,122 @@ const Popover: FC<PopoverProps> = ({
     }
 
     return (
-        <Grid
+        <Flex
             className={stylingIds.popover}
             width={calculateWidth()}
             height={calculatePopoverHeight()}
             backgroundColor="#fff"
-            gridTemplateAreas={
-                isMobile
-                    ? '"suggestions""previews""viewall"'
-                    : '"suggestions previews" "viewall viewall"'
-            }
-            rowGap="16px"
-            columnGap={suggestions.length > 0 ? "16px" : "0px"}
-            gridTemplateColumns={isMobile ? "1fr" : "auto 3fr"}
-            gridTemplateRows={isMobile ? "auto 1fr 36px" : "1fr 36px"}
-            overflowY={isMobile ? "scroll" : "auto"}
-            overflowX="hidden"
+            flexDirection={isMobile ? "column" : "row"}
+            boxSizing="border-box"
         >
             {/* the suggestions element is currently not used */}
             {suggestions.length > 0 && (
-                <Grid
+                <Flex
                     className={stylingIds.suggestions}
-                    gridArea="suggestions"
-                    width={isMobile ? "auto" : "max-content"}
-                    maxWidth={isMobile ? "none" : "150px"}
-                    gridTemplateRows={
-                        isMobile
-                            ? `repeat(${suggestions.length + 1}, 3.5rem)` // +1 to account for "suggestions" row
-                            : `repeat(${pageSize}, 1fr) minmax(0px, 20px);`
-                    }
+                    flexDirection="column"
+                    width={isMobile ? "auto" : "min(28vw, 404px)"}
+                    rowGap={"16px"}
                     padding={
-                        isMobile ? "16px 32px 0px 32px" : "16px 0px 8px 16px"
+                        isMobile ? "24px 16px" : "48px"
                     }
-                    margin={isMobile ? "auto 0px" : "unset"}
-                    textAlign={isMobile ? "center" : "unset"}
+                    boxSizing="border-box"
+                    backgroundColor="#f6f6f6"
+                    flexGrow={1}
                 >
                     <StyledText
-                        customFontWeight={600}
                         className={stylingIds.suggestionsHeader}
                     >
                         {text.suggestions}
                     </StyledText>
                     {Suggestions}
-                </Grid>
+                </Flex>
             )}
 
-            <Grid
-                className={stylingIds.products}
-                gridArea="previews"
-                gridTemplateColumns={"1fr 1fr"}
-                gridTemplateRows={
-                    isMobile
-                        ? `repeat(${Math.ceil(products.length / 2)}, 1fr)`
-                        : "repeat(3, 1fr)"
-                }
-                gap="4px"
-                padding={isMobile ? "0px 16px" : "16px"}
-                paddingBottom="0px"
-                alignSelf="start"
+            <Flex 
+                className={stylingIds.viewAllWrapper}
+                flexDirection="column"
+                maxWidth={isMobile ? "100%" : "784px"}
+                padding={isMobile ? "10px" : "48px 48px 44px"}
+                flexGrow={1}
             >
-                {products.map((product, index) => {
-                    //render
-                    if (index < pageSize) {
-                        return (
-                            <ProductItem
-                                key={product.product.sku}
-                                product={product}
-                                updateAndSubmit={updateAndSubmit}
-                                currencySymbol={currencySymbol}
-                                currencyRate={currencyRate}
-                                route={route}
-                            />
-                        );
-                    }
-                })}
-            </Grid>
+                <Flex 
+                className={stylingIds.closeButton}
+                alignSelf="flex-end"
+                width={isMobile ? "0" : "100%"}
+                height={isMobile ? "0" : "auto"}
+                position="relative"
+                visibility={isMobile ? "hidden" : "visible"}
+                >
+                    <Flex
+                        className={stylingIds.closeIconContainer}
+                        width={"23px"}
+                        height={"23px"}
+                        position={"absolute"}
+                        top={"-30px"}
+                        right={"-30px"}
+                        cursor="pointer"
+                        >
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlSpace="preserve" version="1.1" viewBox="0 0 847 1058.75">
+                            <g><polygon className="fil0" points="54,88 390,423 54,759 88,792 423,457 759,792 792,759 457,423 792,88 759,54 423,390 88,54 "/></g>
+                        </svg>
+                    </Flex>
+                </Flex>
+                <Flex
+                    className={stylingIds.viewAllWrapper}
+                    justifyContent="space-between"
+                >
+                    <Flex
+                        className={stylingIds.searchedTextLabel}
+                    >
+                        {text.searched.replace(
+                                '{text}',
+                                `${inputRef.current?.value}`
+                            )
+                        }
+                    </Flex>
+                    <Grid
+                        className={stylingIds.viewAll}
+                        alignContent="center"
+                        textAlign="center"
+                        onClick={() => updateAndSubmit()}
+                        hoverPointer="pointer"
+                    >
+                        {text.all}
+                    </Grid>
+                </Flex>
 
-            <Grid
-                className={stylingIds.viewAll}
-                gridArea="viewall"
-                alignContent="center"
-                backgroundColor="#f4f4f4"
-                textAlign="center"
-                onClick={() => updateAndSubmit()}
-                hoverColor="#f0f0f0"
-                hoverFontWeight={600}
-                hoverPointer="pointer"
-            >
-                {text.all}
-            </Grid>
-        </Grid>
+                <Grid
+                    className={stylingIds.products}
+                    gridTemplateColumns={
+                        isMobile
+                            ? `repeat(${Math.ceil(products.length / 2)}, 1fr)`
+                            : "repeat(4, 1fr)"
+                    }
+                    gap="8px"
+                    flexGrow={"1"}
+                    alignSelf="start"
+                    overflowY={isMobile ? "scroll" : "auto"}
+                    overflowX="hidden"
+                    margin={"16px auto 0"}
+                >
+                    {products.map((product, index) => {
+                        //render
+                        if (index < pageSize) {
+                            return (
+                                <ProductItem
+                                    key={product.product.sku}
+                                    product={product}
+                                    updateAndSubmit={updateAndSubmit}
+                                    currencySymbol={currencySymbol}
+                                    currencyRate={currencyRate}
+                                    route={route}
+                                />
+                            );
+                        }
+                    })}
+                </Grid>
+            </Flex>
+        </Flex>
     );
 };
 
@@ -254,52 +299,40 @@ const ProductItem: FC<{
 
     const productImage = getProductImageURL(product);
     const productUrl = route
-        ? route({ sku: product.product.sku })
+        ? route({ sku: product.product.sku, urlKey: product.productView.urlKey })
         : product.product.canonical_url;
 
     return (
         <StyledLink href={productUrl || ""} rel="noopener noreferrer">
-            <Grid
+            <Flex
                 className={stylingIds.product}
-                gridTemplateAreas={
-                    isMobile
-                        ? '"image" "productName" "price"'
-                        : '"image productName" "image price"'
-                }
-                gridTemplateColumns={isMobile ? "1fr" : "1fr 4fr"}
-                gridTemplateRows={
-                    isMobile ? "1fr 3.5rem 3.5rem" : "repeat(2, 1fr)"
-                }
-                columnGap="16px"
-                alignSelf="center"
-                height={isMobile ? "auto" : "80px"}
-                minWidth={isMobile ? "auto" : "192px"}
-                hoverColor="#f5f5f5"
+                maxWidth={"166px"}
                 hoverPointer="pointer"
-                padding={isMobile ? "16px" : "unset"}
-                boxSizing={isMobile ? "border-box" : "inherit"}
                 onClick={onProductClick}
+                flexDirection="column"
             >
-                <ProductImage
-                    gridArea="image"
-                    customWidth="100%"
-                    src={productImage || NoImageSvg}
-                />
+                <div className={stylingIds.productImageWrapper}>
+                    <ProductImage width={112} height={112}
+                        customWidth="100%"
+                        src={productImage || NoImageSvg}
+                    />
+                </div>
+                <Grid 
+                    className={stylingIds.productBrand}
+                    margin={"8px 0 2px"}
+                    >
+                    {getProductBrand(product)}
+                </Grid>
                 <Grid
-                    gridArea="productName"
-                    alignSelf={isMobile ? "center" : "end"}
+                    className={stylingIds.productNameWrapper}
                 >
                     <StyledText
-                        customFontWeight={600}
                         className={stylingIds.productName}
                     >
                         {htmlStringDecode(product.product.name)}
                     </StyledText>
                 </Grid>
-                <Grid gridArea="price" className={stylingIds.productPrice}>
-                    {getProductPrice(product, currencySymbol, currencyRate)}
-                </Grid>
-            </Grid>
+            </Flex>
         </StyledLink>
     );
 };

@@ -12,15 +12,26 @@ const searchUnitId = "livesearch-popover";
 // Customers will be using these for their custom styling
 // do *not* change arbitrarily as it may break their storefronts
 const stylingIds = {
+    popoverWrapper: "livesearch popover-wrapper",
     popover: "livesearch popover-container",
     product: "livesearch product-result",
     products: "livesearch products-container",
     productName: "livesearch product-name",
     productPrice: "livesearch product-price",
+    productBrand: "livesearch brand",
+    productImageWrapper: "livesearch product-image-wrapper",
+    productNameWrapper: "livesearch product-name-wrapper",
     suggestion: "livesearch suggestion",
     suggestions: "livesearch suggestions-container",
     suggestionsHeader: "livesearch suggestions-header",
-    viewAll: "livesearch view-all-footer",
+    suggestionLinkContainer: "livesearch suggestions-link-container",
+    suggestionLinkStrong: "livesearch suggestions-link-strong",
+    suggestionLinkInfo: "livesearch suggestions-link-info",
+    viewAll: "livesearch view-all",
+    viewAllWrapper: "livesearch view-all-wrapper",
+    closeButton: "livesearch close-button",
+    closeIconContainer: "livesearch close-icon-container",
+    searchedTextLabel: "livesearch searched-text",
 };
 // ---
 

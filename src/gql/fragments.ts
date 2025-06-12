@@ -67,8 +67,31 @@ const Product = `
                     }
                 }
             }
+            custom_attributes {
+                code
+                value
+            }
         }
     }
 `;
 
-export { Product };
+const ProductView = `
+    fragment ProductView on ProductSearchItem {
+        productView {
+          name
+          sku
+          urlKey
+          images(roles: "thumbnail") {
+            url
+          }
+          attributes(roles: []) {
+            label
+            name
+            value
+          }
+          __typename
+        }
+    }
+`;
+
+export { Product, ProductView };

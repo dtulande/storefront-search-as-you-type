@@ -11,3 +11,4 @@ export * from "./StyledText";
 export * from "./StyledLink";
 export * from "./ProductImage";
 export * from "./Grid";
+export * from "./Flex";
